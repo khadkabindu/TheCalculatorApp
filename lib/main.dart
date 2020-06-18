@@ -27,11 +27,36 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
+  add(){
+
+  }
+
+
+  subtract(){
+
+  }
+
+  multiply(){
+
+  }
+
+
+  divide(){
+
+  }
+
   Row buildButton({String text1, String text2, String text3, String text4}) {
     return Row(
       children: <Widget>[
         FlatButton(
-          onPressed: () => buttonPressed(text1),
+          onPressed: (){
+            if((text1)== 'C'){
+              buttonPressed(result='');
+            }else{
+              buttonPressed(text1);
+            }
+          },
           child: Text(
             '$text1',
             style: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
@@ -73,8 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           child: Text(
             '$text4',
+
             style: TextStyle(color: Colors.pink, fontSize: 20.0),
           ),
+
         ),
       ],
     );
@@ -107,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                'hello',
+                '0',
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
