@@ -28,17 +28,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  calculateResult(String result){
-     setState(() {
-       print(result.split(""));
-     });
+  bool operator (String x,){
+    if(x == '%' || x == '/' || x == '-'|| x =='+' || x == 'x' || x == '=' || x == '-/+'|| x=='AC'|| x=='CE' ){
+      return true;
+    }
+    return false;
 
   }
 
-  void equalPressed(){
+
+  void onEqualPressed(){
 
     String finalQuestion = userQuestion;
-    finalQuestion =finalQuestion.replaceAll('x', '*');
+    finalQuestion = finalQuestion.replaceAll('x', '*');
     Parser p = Parser();
     Expression exp = p.parse(finalQuestion);
     ContextModel cm = ContextModel();
@@ -49,55 +51,62 @@ class _MyHomePageState extends State<MyHomePage> {
     return Row(
       children: <Widget>[
         FlatButton(
+          color: operator(text1)? Colors.greenAccent: Colors.grey[900],
           onPressed: (){
-            if((text1)== 'C'){
+            if((text1)== 'AC'){
               buttonPressed(userQuestion='');
               buttonPressed(userAnswer = '');
-            }else{
+            }
+            else{
               buttonPressed(text1);
             }
           },
           child: Text(
             '$text1',
-            style: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
+            style: TextStyle(color: operator(text1)? Colors.white : Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),
           ),
+          shape: CircleBorder(side: BorderSide(width: 0.0)),
         ),
         SizedBox(
           height: 80.0,
           width: 5.0,
         ),
         FlatButton(
+          color: operator(text2)? Colors.blue[400] : Colors.grey[900],
           onPressed: () {
             buttonPressed(text2);
           },
           child: Text(
             '$text2',
-            style: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
+            style: TextStyle(color: operator(text2)? Colors.white : Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),
           ),
+          shape: CircleBorder(side: BorderSide(width: 0.0)),
         ),
         SizedBox(
           height: 80.0,
           width: 5.0,
         ),
         FlatButton(
+          color: operator(text3)? Colors.pink[400] : Colors.grey[900],
           onPressed: () {
             buttonPressed(text3);
           },
           child: Text(
             '$text3',
-            style: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
+            style: TextStyle(color: operator(text3)? Colors.white : Colors.blueGrey,fontWeight: FontWeight.bold,fontSize: 20.0),
           ),
+          shape: CircleBorder(side: BorderSide(width: 0.0)),
         ),
         SizedBox(
           height: 80.0,
           width: 5.0,
         ),
-
         FlatButton(
+          color: Colors.pink[400],
           onPressed: () {
             if(text4 == '='){
               setState(() {
-                equalPressed();
+                onEqualPressed();
               });
             }
             else {
@@ -106,8 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
           },
           child: Text(
             '$text4',
-            style: TextStyle(color: Colors.pink, fontSize: 20.0),
+            style: TextStyle(color: operator(text4)? Colors.white : Colors.blueGrey, fontWeight: FontWeight.bold,fontSize: 20.0),
           ),
+          shape: CircleBorder(side: BorderSide(width: 0.0)),
+
         ),
       ],
     );
@@ -163,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Column(
             children: <Widget>[
-              buildButton(text1: 'C', text2: '+/-', text3: '%', text4: '/'),
+              buildButton(text1: 'AC', text2: 'CE', text3: '%', text4: '/'),
               buildButton(text1: '7', text2: '8', text3: '9', text4: 'x'),
               buildButton(text1: '4', text2: '5', text3: '6', text4: '-'),
               buildButton(text1: '1', text2: '2', text3: '3', text4: '+'),
