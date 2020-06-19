@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:math_expressions/math_expressions.dart';
 void main() {
   runApp(MyApp());
 }
@@ -19,40 +19,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String result = "";
+  String userQuestion = "";
+  String userAnswer = "";
 
   void buttonPressed(String value) {
     setState(() {
-      result += value;
+      userQuestion += value;
     });
   }
 
-
-  add(){
-
-  }
-
-
-  subtract(){
+  calculateResult(String result){
+     setState(() {
+       print(result.split(""));
+     });
 
   }
 
-  multiply(){
+  void equalPressed(){
 
+    String finalQuestion = userQuestion;
+    finalQuestion =finalQuestion.replaceAll('x', '*');
+    Parser p = Parser();
+    Expression exp = p.parse(finalQuestion);
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+    userAnswer = eval.toString();
   }
-
-
-  divide(){
-
-  }
-
   Row buildButton({String text1, String text2, String text3, String text4}) {
     return Row(
       children: <Widget>[
         FlatButton(
           onPressed: (){
             if((text1)== 'C'){
-              buttonPressed(result='');
+              buttonPressed(userQuestion='');
+              buttonPressed(userAnswer = '');
             }else{
               buttonPressed(text1);
             }
@@ -92,21 +92,26 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 80.0,
           width: 5.0,
         ),
+
         FlatButton(
           onPressed: () {
-            buttonPressed(text4);
+            if(text4 == '='){
+              setState(() {
+                equalPressed();
+              });
+            }
+            else {
+              buttonPressed(text4);
+            }
           },
           child: Text(
             '$text4',
-
             style: TextStyle(color: Colors.pink, fontSize: 20.0),
           ),
-
         ),
       ],
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
-                  result,
+                  userQuestion,
                   style: TextStyle(color: Colors.blueGrey, fontSize: 20.0),
                 )),
           ),
@@ -134,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                '0',
+                userAnswer,
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
