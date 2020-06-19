@@ -1,3 +1,3 @@
 # fluttercalculator
 
-![](images/screen2.png = 100x20)
+<img src="images/screen2.png" alt="screen image" width="300" height="600">
